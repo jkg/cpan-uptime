@@ -1,6 +1,6 @@
 #!/usr/bin/env perl
 use strict; use warnings;
-use feature ':5.20';
+use feature ':5.18';
 
 use LWP::UserAgent;
 use DBI;
@@ -37,13 +37,13 @@ for my $k (keys %targets) {
 sub save_result {
 
   my ( $success, $time, $target ) = @_;
-  die "wtf?" unless $target;
+  die "save_result called with <3 args ... wat?" unless $target;
 
   $dbh->do(
     q!
       INSERT INTO results (result, seconds, timestamp, site)
       VALUES ( ?, ?, ?, ? )
     !, {}, $success, $time, int time(), $target
-  );
+  ) or die "Couldn't store result for $target: " . $dbh->errstr;
 
 }
