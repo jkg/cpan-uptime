@@ -25,10 +25,8 @@ for my $k (keys %targets) {
 
   if ( $res->is_success ) {
     my $ms = int ( 1000 * ( $ts_after - $ts_before ) );
-    say "success, took $ms ms, site was $k";
     save_result( 1, $ms, $k);
   } else {
-    say "failure from site $k";
     save_result( 0, -1, $k );
   }
 
