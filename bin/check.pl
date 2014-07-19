@@ -11,7 +11,11 @@ use Time::HiRes qw/time/;
 my $ua = LWP::UserAgent->new();
 $ua->timeout(30);
 
-my $dbh = DBI->connect('dbi:SQLite:dbname=results.sqlite','','');
+my $cfg = Config::YAML->new( config => 'config.yaml' );
+my $db_path = $cfg->{db_path};
+
+my $dbh = DBI->connect("dbi:SQLite:dbname=$db_path",'','') 
+  or die "Couldn't open DB";
 
 my %targets = (
   meta => 'http://metacpan.org/pod/Moose',
@@ -28,7 +32,7 @@ for my $k (keys %targets) {
     my $ms = int ( 1000 * ( $ts_after - $ts_before ) );
     save_result( 1, $ms, $k);
   } else {
-    save_result( 0, -1, $k );
+    save_result( 0, undef, $k );
   }
 
 }
@@ -40,7 +44,7 @@ sub save_result {
 
   $dbh->do(
     q!
-      INSERT INTO results (result, seconds, timestamp, site)
+      INSERT INTO results (result, msec, timestamp, site)
       VALUES ( ?, ?, ?, ? )
     !, {}, $success, $time, int time(), $target
   ) or die "Couldn't store result for $target: " . $dbh->errstr;

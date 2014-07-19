@@ -8,14 +8,14 @@ The tool stores data in results.sqlite. I will update the instance of this in th
 
 ### Schema
 
-CREATE TABLE results ( result integer, seconds integer, timestamp integer, site text );
+    CREATE TABLE results ( result integer, seconds integer, timestamp integer, site text );
 
 ### Notes
 
-* Result is really a boolean; 1 indicates success, 0 failure.
-* Seconds is the time in _milliseconds_ that the request took to complete (roughly), as an integer.
-* Timestamp is the UNIX time at which the result was _stored_.
-* Site will either be "meta" or "sco", for http://metacpan.org/ or http://search.cpan.org/ respectively.
+* `result` is really a boolean; 1 indicates success, 0 failure.
+* `msec` is the time in _milliseconds_ that the request took to complete (roughly), as an integer. NULL if we failed.
+* `timestamp` is the UNIX time at which the result was _stored_.
+* `site` will either be "meta" or "sco", for http://metacpan.org/ or http://search.cpan.org/ respectively.
 
 Methodology
 -----------
