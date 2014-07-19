@@ -2,6 +2,7 @@
 use strict; use warnings;
 use feature ':5.18';
 
+use Config::YAML;
 use LWP::UserAgent;
 use DBI;
 
