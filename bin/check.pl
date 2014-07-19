@@ -18,8 +18,8 @@ my $dbh = DBI->connect("dbi:SQLite:dbname=$db_path",'','')
   or die "Couldn't open DB";
 
 my %targets = (
-  meta => 'http://metacpan.org/pod/Moose',
-  sco => 'http://search.cpan.org/perldoc/Moose/',
+  meta => 'https://metacpan.org/search?q=Moose',
+  sco => 'http://search.cpan.org/search?query=Moose&mode=all',
 );
 
 for my $k (keys %targets) {
